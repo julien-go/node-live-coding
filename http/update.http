@@ -1,0 +1,7 @@
+POST http://localhost:3000/api/wilder/update
+Content-Type: application/json
+
+{
+	"name" : "john doe",
+	"id" : 1
+}
