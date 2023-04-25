@@ -1,6 +1,0 @@
-POST http://localhost:3000/api/wilder/create
-Content-Type: application/json
-
-{
-	"name" : "jane doe"
-}

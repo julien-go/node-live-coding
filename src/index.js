@@ -11,17 +11,18 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/api/wilder/read", WilderController.read)
-app.post("/api/wilder/create", WilderController.create)
-app.post("/api/wilder/update", WilderController.update)
-app.post("/api/wilder/delete", WilderController.delete)
+app.get("/api/wilder", WilderController.read)
+app.post("/api/wilder", WilderController.create)
+app.put("/api/wilder", WilderController.update)
+app.delete("/api/wilder", WilderController.delete)
+
 app.post("/api/wilder/addSkill", WilderController.addSkill)
 
 
-app.get("/api/skill/read", SkillController.read)
-app.post("/api/skill/create", SkillController.create)
-app.post("/api/skill/update", SkillController.update)
-app.post("/api/skill/delete", SkillController.delete)
+app.get("/api/skill", SkillController.read)
+app.post("/api/skill", SkillController.create)
+app.put("/api/skill", SkillController.update)
+app.post("/api/skill", SkillController.delete)
 
 app.use((req, res, next) => {
   res.status(404).send("Erreur 404 ! URL not found")
