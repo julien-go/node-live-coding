@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/skill/delete
+Content-Type: application/json
+
+{
+	"id": 7
+}
