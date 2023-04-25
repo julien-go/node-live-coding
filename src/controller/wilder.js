@@ -1,5 +1,6 @@
 const dataSource = require("../utils").dataSource;
 const Wilder = require("../entity/Wilder");
+const Skill = require("../entity/Skill");
 
 module.exports = {
 	create: async (req, res) => {
@@ -8,7 +9,8 @@ module.exports = {
 			const add = await data.save(req.body)
 			res.send("Created")
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while creating")
 		}
 	},
@@ -19,7 +21,8 @@ module.exports = {
 			const wilders = await data.find()
 			res.send(wilders)
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while reading")
 		}
 	},
@@ -32,7 +35,8 @@ module.exports = {
 								.execute()
 			res.send("Succesfully updated")
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while updating")
 		}
 
@@ -47,9 +51,29 @@ module.exports = {
 								.execute()
 			res.send("Succesfully deleted")
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while deleting")
 		}
+	},
+	addSkill: async (req, res) => {
+		try {
+			const wilder = await dataSource
+							.getRepository(Wilder)
+							.findOneBy({id: req.body.wilderId});
+			const skill = await dataSource
+							.getRepository(Skill)
+							.findOneBy({name: req.body.skillName});
+			wilder.skills = [...wilder.skills, skill]
+			
+			await dataSource.getRepository(Wilder).save(wilder)
+			res.send("Skill added")
+		}
+		catch (err) {
+			console.log(err)
+			res.send("Error while adding skill")
+		}
+
 	}
 
 }

@@ -2,5 +2,5 @@ POST http://localhost:3000/api/skill/create
 Content-Type: application/json
 
 {
-	"name" : "Javascript"
+	"name" : "CSS"
 }

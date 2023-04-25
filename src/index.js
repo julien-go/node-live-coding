@@ -15,6 +15,7 @@ app.get("/api/wilder/read", WilderController.read)
 app.post("/api/wilder/create", WilderController.create)
 app.post("/api/wilder/update", WilderController.update)
 app.post("/api/wilder/delete", WilderController.delete)
+app.post("/api/wilder/addSkill", WilderController.addSkill)
 
 
 app.get("/api/skill/read", SkillController.read)

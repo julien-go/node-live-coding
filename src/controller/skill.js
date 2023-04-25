@@ -8,7 +8,8 @@ module.exports = {
 			const add = await data.save(req.body)
 			res.send("Created")
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while creating")
 		}
 	},
@@ -19,7 +20,8 @@ module.exports = {
 			const wilders = await data.find()
 			res.send(wilders)
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while reading")
 		}
 	},
@@ -32,7 +34,8 @@ module.exports = {
 								.execute()
 			res.send("Succesfully updated")
 		}
-		catch {
+		catch (err)  {
+			console.log(err)
 			res.send("Error while updating")
 		}
 
@@ -47,7 +50,8 @@ module.exports = {
 								.execute()
 			res.send("Succesfully deleted")
 		}
-		catch {
+		catch (err) {
+			console.log(err)
 			res.send("Error while deleting")
 		}
 	}
