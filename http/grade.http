@@ -19,9 +19,8 @@ Content-Type: application/json
 
 {
 	"wilderId" : 1,
-	
 	"skill" : "React",
-	"grade" : 6
+	"grade" : 3
 }
 
 ###

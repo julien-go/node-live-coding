@@ -27,6 +27,7 @@ Content-Type: application/json
 {
 	"id" : 1,
 	"newData": {
-		"name":"john"
+		"name":"john",
+		"city": "NY"
 	}
 }

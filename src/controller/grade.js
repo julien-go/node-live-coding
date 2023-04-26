@@ -33,17 +33,19 @@ module.exports = {
 			res.send("Error while reading")
 		}
 	},
-	// update: async (req, res) => {
-	// 	try {
-	// 		const modify = await dataSource.getRepository(Grade).update(req.body.id, req.body.newData)
-	// 		res.send("Succesfully updated")
-	// 	}
-	// 	catch (err)  {
-	// 		console.log(err)
-	// 		res.send("Error while updating")
-	// 	}
+	update: async (req, res) => {
+		try {
+			const gradeToUpdate = await dataSource.getRepository(Grade).findOneBy({wilder: {id: req.body.wilderId}, skill: {name: req.body.skill}})
+			console.log(gradeToUpdate)
+			const modify = await dataSource.getRepository(Grade).update(gradeToUpdate.id, {skill: gradeToUpdate.skill, grade: req.body.grade})
+			res.send("Succesfully updated")
+		}
+		catch (err)  {
+			console.log(err)
+			res.send("Error while updating")
+		}
 
-	// },
+	},
 	delete: async (req, res) => {
 
 		try {

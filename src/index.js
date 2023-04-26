@@ -27,7 +27,7 @@ app.delete("/api/skill", SkillController.delete)
 
 app.get("/api/grade", GradeController.read)
 app.post("/api/grade", GradeController.create)
-// app.put("/api/grade", GradeController.update)
+app.put("/api/grade", GradeController.update)
 app.delete("/api/grade", GradeController.delete)
 
 
