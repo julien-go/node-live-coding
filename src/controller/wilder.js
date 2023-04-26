@@ -1,12 +1,13 @@
 const dataSource = require("../utils").dataSource;
 const Wilder = require("../entity/Wilder");
 const Skill = require("../entity/Skill");
+const Grade = require("../entity/Grade");
 
 module.exports = {
 	create: async (req, res) => {
 		try {
 			const data = await dataSource.getRepository(Wilder)
-			const add = await data.save(req.body)
+			await data.save(req.body)
 			res.send("Created")
 		}
 		catch (err)  {
@@ -17,9 +18,18 @@ module.exports = {
 
 	read: async (req, res) => {
 		try {
-			const data = await dataSource.getRepository(Wilder)
-			const wilders = await data.find()
-			res.send(wilders)
+			const grades = await dataSource.getRepository(Grade).find()
+			const wilders = await dataSource.getRepository(Wilder).find()
+
+			const data = wilders.map((wilder) => {
+				const wilderGrades = grades.filter((grade) => grade.wilderId === wilder.id);
+				const wilderGradesLean = wilderGrades.map((el) => {
+					return {title: el.skill.name, grade: el.grade}
+				});
+
+				return {...wilder, skills: wilderGradesLean}
+			})
+			res.send(data)
 		}
 		catch (err)  {
 			console.log(err)
@@ -28,11 +38,7 @@ module.exports = {
 	},
 	update: async (req, res) => {
 		try {
-			const modify = await dataSource.createQueryBuilder()
-								.update(Wilder)
-								.set(req.body)
-								.where("id = :id", {id: req.body.id})
-								.execute()
+			await dataSource.getRepository(Wilder).update(req.body.id, req.body.newData)
 			res.send("Succesfully updated")
 		}
 		catch (err)  {
@@ -44,11 +50,7 @@ module.exports = {
 	delete: async (req, res) => {
 
 		try {
-			const remove = await dataSource.createQueryBuilder()
-								.delete()
-								.from(Wilder)
-								.where("id = :id", {id: req.body.id})
-								.execute()
+			await dataSource.getRepository(Wilder).delete(req.body)
 			res.send("Succesfully deleted")
 		}
 		catch (err)  {
@@ -56,24 +58,4 @@ module.exports = {
 			res.send("Error while deleting")
 		}
 	},
-	addSkill: async (req, res) => {
-		try {
-			const wilder = await dataSource
-							.getRepository(Wilder)
-							.findOneBy({id: req.body.wilderId});
-			const skill = await dataSource
-							.getRepository(Skill)
-							.findOneBy({name: req.body.skillName});
-			wilder.skills = [...wilder.skills, skill]
-			
-			await dataSource.getRepository(Wilder).save(wilder)
-			res.send("Skill added")
-		}
-		catch (err) {
-			console.log(err)
-			res.send("Error while adding skill")
-		}
-
-	}
-
 }

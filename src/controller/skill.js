@@ -5,7 +5,7 @@ module.exports = {
 	create: async (req, res) => {
 		try {
 			const data = await dataSource.getRepository(Skill)
-			const add = await data.save(req.body)
+			await data.save(req.body)
 			res.send("Created")
 		}
 		catch (err)  {
@@ -16,9 +16,8 @@ module.exports = {
 
 	read: async (req, res) => {
 		try {
-			const data = await dataSource.getRepository(Skill)
-			const wilders = await data.find()
-			res.send(wilders)
+			const data = await dataSource.getRepository(Skill).find()
+			res.send(data)
 		}
 		catch (err)  {
 			console.log(err)
@@ -27,11 +26,7 @@ module.exports = {
 	},
 	update: async (req, res) => {
 		try {
-			const modify = await dataSource.createQueryBuilder()
-								.update(Skill)
-								.set(req.body)
-								.where("id = :id", {id: req.body.id})
-								.execute()
+			const modify = await dataSource.getRepository(Skill).update(req.body.id, req.body.newData)
 			res.send("Succesfully updated")
 		}
 		catch (err)  {
@@ -43,11 +38,7 @@ module.exports = {
 	delete: async (req, res) => {
 
 		try {
-			const remove = await dataSource.createQueryBuilder()
-								.delete()
-								.from(Skill)
-								.where("id = :id", {id: req.body.id})
-								.execute()
+			const remove = await dataSource.getRepository(Skill).delete(req.body)
 			res.send("Succesfully deleted")
 		}
 		catch (err) {
